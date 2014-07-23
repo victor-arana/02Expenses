@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Control de gastos</title>
+</head>
+<body>
+	<h1>Captura de gastos</h1>
+	<form method="POST" action="Gastos.do">
+		Seleccione las características del gasto:
+		<p>
+		Tipo:
+		<select name="tipo" size="1">
+			<option value="Gasto">Gasto</option>
+			<option value="Transporte">Transporte</option>
+			<option value="Alimentos">Alimentos</option>
+			<option value="Servicios">Servicios</option>
+			<option value="Deudas">Deudas</option>
+		</select>
+		<p>
+		Fecha: 
+		<input type="text" name="fecha">
+		<p>
+		Costo: 
+		<input type="text" name="costo"><br> 
+		<p>
+		Descripción:<br>
+		<textarea rows="2" cols="20" name="descripcion">
+		</textarea>
+		<p>
+		<input type="SUBMIT" value="Enviar">
+	</form>
+
+</body>
+</html>
