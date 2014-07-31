@@ -12,5 +12,31 @@
 		<servlet-name>Gastos</servlet-name>
 		<url-pattern>/Gastos.do</url-pattern>
 	</servlet-mapping>
+	
+	<context-param>
+		<param-name>DBUSER</param-name>
+		<param-value>system</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>DBPWD</param-name>
+		<param-value>reverload</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>DBDRIVER</param-name>
+		<param-value>oracle.jdbc.OracleDriver</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>DBURL</param-name>
+		<param-value>jdbc:oracle:thin:@localhost:1521:XE</param-value>
+	</context-param>
+		
+	<listener>
+		<listener-class>
+			net.nodata.expenses.listener.AppContextListener
+		</listener-class>
+	</listener>
   
 </web-app>

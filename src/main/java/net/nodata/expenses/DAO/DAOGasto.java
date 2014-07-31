@@ -1,39 +1,60 @@
 package net.nodata.expenses.DAO;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 import net.nodata.expenses.DTO.DTOGasto;
 
 public class DAOGasto {
-	public static void add(DTOGasto gasto, String filepath) throws IOException {
-		File file = new File(filepath);
-		PrintWriter out = new PrintWriter(new FileWriter(file, true));
-		out.println(gasto.getTipo() + "|" + gasto.getFecha() + "|"
-				+ gasto.getCosto() + "|" + gasto.getDescripcion());
-		out.close();
+	
+	public static void add(DTOGasto gasto,Connection con) throws IOException {
+		PreparedStatement statement = null;
+
+		
+		try{
+			statement = con.prepareStatement("INSERT INTO gastos VALUES(?,?,?,?)");
+			statement.setString(1, gasto.getTipo());
+			statement.setString(2, gasto.getFecha());
+			statement.setString(3, gasto.getCosto());
+			statement.setString(4, gasto.getDescripcion());
+			statement.executeUpdate();
+		} catch(SQLException e){
+			
+		}
+
 	}
 	
-	public static List<String> getGastos(String filepath) throws IOException{
-		File file = new File(filepath);
-		FileReader fileReader = new FileReader(file);
-		BufferedReader reader = new BufferedReader(fileReader);
+	public static List<DTOGasto> getGastos(Connection con) throws IOException, SQLException{
 		
-		String line = null;
-		List<String> gastos = new ArrayList<String>();
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		List<DTOGasto> gastos = new ArrayList<DTOGasto>();
 		
-		while( (line = reader.readLine()) != null){
-			gastos.add(line);
+		try{
+			statement = con.prepareStatement("SELECT * FROM gastos");
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()){
+				DTOGasto dtoGasto = new DTOGasto();
+				dtoGasto.setTipo(resultSet.getString("tipo"));
+				dtoGasto.setFecha(resultSet.getString("fecha"));
+				dtoGasto.setCosto(resultSet.getString("costo"));
+				dtoGasto.setDescripcion(resultSet.getString("descripcion"));
+				gastos.add(dtoGasto);
+			}
+			
+		} finally{
+			
 		}
 		
-		reader.close();
 		return gastos;
+
 	}
 
 }

@@ -2,6 +2,8 @@ package net.nodata.expenses.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,24 +28,29 @@ public class CTRGastos extends HttpServlet{
 		String costo = request.getParameter("costo");
 		String descripcion = request.getParameter("descripcion");
 		
-		// Get a relative file name
+		// Get a connection to Database
 		ServletContext sc = getServletContext();
-		String path = sc.getRealPath("/WEB-INF/ExpensesList.txt");
+		Connection con = (Connection) sc.getAttribute("DBConnection"); 
 		
 		// Use regular Java objects to write the data to a file
 		DTOGasto gasto = new DTOGasto(tipo, fecha, costo, descripcion);
-		DAOGasto.add(gasto, path);
+		DAOGasto.add(gasto, con);
 		
 		// Send response to browser
-		List<String> result = DAOGasto.getGastos(path);
-		
-		
+		List<DTOGasto> result = null;
+		try {
+			result = DAOGasto.getGastos(con);			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		Iterator<String> it = result.iterator();
+		Iterator<DTOGasto> it = result.iterator();
 		while(it.hasNext()){
-			out.print("<br>Gasto: " + it.next());
+			out.print("<br>: " + it.next().getTipo());
 		}
 		
 		out.close();

@@ -14,6 +14,10 @@ public class DTOGasto {
 		this.descripcion = descripcion;
 	}
 	
+	public DTOGasto() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getTipo() {
 		return tipo;
 	}
