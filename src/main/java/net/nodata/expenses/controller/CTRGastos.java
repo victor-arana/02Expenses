@@ -50,7 +50,7 @@ public class CTRGastos extends HttpServlet{
 		
 		Iterator<DTOGasto> it = result.iterator();
 		while(it.hasNext()){
-			out.print("<br>: " + it.next().getTipo());
+			out.print("<br>: " + it.next().toString());
 		}
 		
 		out.close();

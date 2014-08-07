@@ -7,6 +7,12 @@ public class DTOGasto {
 	private String costo;
 	private String descripcion;
 	
+	@Override
+	public String toString() {
+		return "[" + tipo + ", " + fecha + ", "
+				+ costo + ", " + descripcion + "]";
+	}
+
 	public DTOGasto(String tipo, String fecha, String costo2, String descripcion) {
 		this.tipo = tipo;
 		this.fecha = fecha;
