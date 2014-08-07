@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -45,15 +46,13 @@ public class CTRGastos extends HttpServlet{
 			e.printStackTrace();
 		}
 				
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
+		// Store the result object in the request object
+		request.setAttribute("result", result);
 		
-		Iterator<DTOGasto> it = result.iterator();
-		while(it.hasNext()){
-			out.print("<br>: " + it.next().toString());
-		}
-		
-		out.close();
+		// forward request and response objects to JSP page
+		String url = "/displayExpenses.jsp";
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 		
 	}
 }
