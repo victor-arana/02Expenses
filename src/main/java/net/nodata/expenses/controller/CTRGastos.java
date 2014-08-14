@@ -33,11 +33,11 @@ public class CTRGastos extends HttpServlet{
 		ServletContext sc = getServletContext();
 		Connection con = (Connection) sc.getAttribute("DBConnection"); 
 		
-		// Use regular Java objects to write the data to a file
+		// Use a DTO to register the collected info and save it to the db
 		DTOGasto gasto = new DTOGasto(tipo, fecha, costo, descripcion);
 		DAOGasto.add(gasto, con);
 		
-		// Send response to browser
+		// Retrieve all the information from the database
 		List<DTOGasto> result = null;
 		try {
 			result = DAOGasto.getGastos(con);			
@@ -47,7 +47,9 @@ public class CTRGastos extends HttpServlet{
 		}
 				
 		// Store the result object in the request object
-		request.setAttribute("result", result);
+		request.setAttribute("result", result);		
+		request.setAttribute("gasto", gasto);
+		
 		
 		// forward request and response objects to JSP page
 		String url = "/displayExpenses.jsp";
