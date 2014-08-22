@@ -1,9 +1,11 @@
 package net.nodata.expenses.DTO;
 
+import java.sql.Date;
+
 public class DTOGasto {
 	
 	private String tipo;
-	private String fecha;
+	private Date fecha;
 	private String costo;
 	private String descripcion;
 	
@@ -13,7 +15,7 @@ public class DTOGasto {
 				+ costo + ", " + descripcion + "]";
 	}
 
-	public DTOGasto(String tipo, String fecha, String costo2, String descripcion) {
+	public DTOGasto(String tipo, Date fecha, String costo2, String descripcion) {
 		this.tipo = tipo;
 		this.fecha = fecha;
 		this.costo = costo2;
@@ -30,11 +32,11 @@ public class DTOGasto {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public void setFecha(Date date) {
+		this.fecha = date;
 	}
 	public String getCosto() {
 		return costo;

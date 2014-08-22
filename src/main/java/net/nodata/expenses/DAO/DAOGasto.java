@@ -20,7 +20,7 @@ public class DAOGasto {
 		try{
 			statement = con.prepareStatement("INSERT INTO gastos VALUES(?,?,?,?)");
 			statement.setString(1, gasto.getTipo());
-			statement.setString(2, gasto.getFecha());
+			statement.setDate(2, gasto.getFecha());			
 			statement.setString(3, gasto.getCosto());
 			statement.setString(4, gasto.getDescripcion());
 			statement.executeUpdate();
@@ -43,7 +43,7 @@ public class DAOGasto {
 			while(resultSet.next()){
 				DTOGasto dtoGasto = new DTOGasto();
 				dtoGasto.setTipo(resultSet.getString("tipo"));
-				dtoGasto.setFecha(resultSet.getString("fecha"));
+				dtoGasto.setFecha(resultSet.getDate("fecha"));
 				dtoGasto.setCosto(resultSet.getString("costo"));
 				dtoGasto.setDescripcion(resultSet.getString("descripcion"));
 				gastos.add(dtoGasto);
