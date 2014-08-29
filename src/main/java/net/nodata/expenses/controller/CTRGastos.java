@@ -1,10 +1,8 @@
 package net.nodata.expenses.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -23,19 +21,23 @@ public class CTRGastos extends HttpServlet{
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
-		// Get parameters from the request
+		// 1. Get parameters from the request
 		String tipo = request.getParameter("tipo");
 		String fecha = request.getParameter("fecha");
 		String costo = request.getParameter("costo");
 		String descripcion = request.getParameter("descripcion");
 		
-		// Get a connection to Database
+		// 2. Get a connection to Database
 		ServletContext sc = getServletContext();
 		Connection con = (Connection) sc.getAttribute("DBConnection"); 
 		
 		// Use a DTO to register the collected info and save it to the db
 		DTOGasto gasto = new DTOGasto(tipo, fecha, costo, descripcion);
 		DAOGasto.add(gasto, con);
+
+
+			// TODO Auto-generated catch block
+
 		
 		// Retrieve all the information from the database
 		List<DTOGasto> result = null;
