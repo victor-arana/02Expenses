@@ -3,6 +3,9 @@ package net.nodata.expenses.controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -23,7 +26,13 @@ public class CTRGastos extends HttpServlet{
 		
 		// 1. Get parameters from the request
 		String tipo = request.getParameter("tipo");
-		String fecha = request.getParameter("fecha");
+		Date fecha = null;
+		try {
+			fecha = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("fecha"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String costo = request.getParameter("costo");
 		String descripcion = request.getParameter("descripcion");
 		

@@ -19,7 +19,7 @@ public class DAOGasto {
 		PreparedStatement statement = null;
 		
 		try{
-			Date fecha = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(gasto.getFecha());
+			Date fecha = gasto.getFecha();
 			String insertTableSQL = "INSERT INTO gastos" + " (tipo, costo, descripcion, fecha) VALUES " + "(?,?,?,?)";
 			statement = con.prepareStatement(insertTableSQL);
 			statement.setString(1, gasto.getTipo());				
@@ -29,10 +29,6 @@ public class DAOGasto {
 			statement.executeUpdate();
 		} catch(SQLException e){
 			e.printStackTrace();
-		} catch (ParseException e) {
-
-			e.printStackTrace();
-			System.out.println("Error de parseo");
 		}
 
 	}
@@ -50,7 +46,7 @@ public class DAOGasto {
 			while(resultSet.next()){
 				DTOGasto dtoGasto = new DTOGasto();
 				dtoGasto.setTipo(resultSet.getString("tipo"));
-				dtoGasto.setFecha(resultSet.getDate("fecha").toString());
+				dtoGasto.setFecha(resultSet.getDate("fecha"));
 				dtoGasto.setCosto(resultSet.getString("costo"));
 				dtoGasto.setDescripcion(resultSet.getString("descripcion"));
 				System.out.println(dtoGasto.toString()); 
