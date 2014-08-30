@@ -8,7 +8,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-
 public class AppContextListener implements ServletContextListener {
 
 	@Override
@@ -18,33 +17,35 @@ public class AppContextListener implements ServletContextListener {
 		String url = ctx.getInitParameter("DBURL");
 		String user = ctx.getInitParameter("DBUSER");
 		String pwd = ctx.getInitParameter("DBPWD");
-		
-		
-		try{
+
+		try {
 			// load the driver
 			Class.forName(driver);
-			Connection con = DriverManager.getConnection(url,user,pwd);
-			
-			// Storing connection object as an attribute in ServletContext
-			ctx.setAttribute("DBConnection",con);
+			Connection con = DriverManager.getConnection(url, user, pwd);
+			con.createStatement()
+					.executeUpdate(
+							"create table gastos (tipo varchar(45), costo varchar(45), descripcion varchar(45), fecha date)");
 
-		} catch(ClassNotFoundException e){
+			// Storing connection object as an attribute in ServletContext
+			ctx.setAttribute("DBConnection", con);
+
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
-		Connection con = (Connection) servletContextEvent.getServletContext().getAttribute("DBConnection");
-		try{
+		Connection con = (Connection) servletContextEvent.getServletContext()
+				.getAttribute("DBConnection");
+		try {
 			con.close();
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 
 	}
 

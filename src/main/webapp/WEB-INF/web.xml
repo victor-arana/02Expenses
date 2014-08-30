@@ -25,12 +25,12 @@
 	
 	<context-param>
 		<param-name>DBDRIVER</param-name>
-		<param-value>oracle.jdbc.OracleDriver</param-value>
+		<param-value>org.hsqldb.jdbc.JDBCDriver</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>DBURL</param-name>
-		<param-value>jdbc:oracle:thin:@localhost:1521:XE</param-value>
+		<param-value>jdbc:hsqldb:mydatabase</param-value>
 	</context-param>
 		
 	<listener>

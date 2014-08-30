@@ -19,11 +19,11 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 		</dependency>
-		<!-- ORACLE database driver -->
+		<!-- HSQLDB -->
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0</version>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.2.8</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
