@@ -28,16 +28,15 @@ public class CTRGastos extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
-		// 1. Get parameters from the request
+				
 		String tipo = null;
 		Date fecha = null;
 		Double costo = null;
 		String descripcion = null;
 		
+		// 1. Get parameters from the request
 		tipo = request.getParameter("tipo");
 		descripcion = request.getParameter("descripcion");
-		
 		try {
 			fecha = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("fecha"));
 			costo = Double.parseDouble(request.getParameter("costo"));
@@ -60,7 +59,6 @@ public class CTRGastos extends HttpServlet{
 		try {
 			result = DAOGasto.getGastos(con);			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 				
