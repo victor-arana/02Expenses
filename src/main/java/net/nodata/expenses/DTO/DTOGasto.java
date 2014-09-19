@@ -7,7 +7,7 @@ public class DTOGasto {
 	
 	private String tipo;
 	private Date fecha;
-	private String costo;
+	private Double costo;
 	private String descripcion;
 	
 	@Override
@@ -16,10 +16,10 @@ public class DTOGasto {
 				+ costo + ", " + descripcion + "]";
 	}
 
-	public DTOGasto(String tipo, Date fecha, String costo2, String descripcion) {
+	public DTOGasto(String tipo, Date fecha, Double costo, String descripcion) {
 		this.tipo = tipo;
 		this.fecha = fecha;
-		this.costo = costo2;
+		this.costo = costo;
 		this.descripcion = descripcion;
 	}
 	
@@ -39,10 +39,10 @@ public class DTOGasto {
 	public void setFecha(Date date) {
 		this.fecha = date;
 	}
-	public String getCosto() {
+	public Double getCosto() {
 		return costo;
 	}
-	public void setCosto(String costo) {
+	public void setCosto(Double costo) {
 		this.costo = costo;
 	}
 	public String getDescripcion() {

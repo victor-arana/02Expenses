@@ -1,6 +1,8 @@
 package net.nodata.expenses.DAO;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,22 +15,31 @@ import net.nodata.expenses.DTO.DTOGasto;
 
 public class DAOGasto {
 	
+	/**
+	 * Insert a new register into the table Gastos
+	 * @param gasto 
+	 * @param con Database connection
+	 * @throws IOException
+	 * 
+	 * @author Victor José Arana Rodríguez
+	 * @since 19/09/2014
+	 */
 	public static void add(DTOGasto gasto,Connection con) throws IOException{
+		
 		PreparedStatement statement = null;
 		
 		try{
 			Date fecha = gasto.getFecha();
 			String insertTableSQL = "INSERT INTO gastos" + " (tipo, costo, descripcion, fecha) VALUES " + "(?,?,?,?)";
 			statement = con.prepareStatement(insertTableSQL);
-			statement.setString(1, gasto.getTipo());				
-			statement.setString(2, gasto.getCosto());
+			statement.setString(1, gasto.getTipo());
+			statement.setDouble(2, gasto.getCosto());			
 			statement.setString(3, gasto.getDescripcion());
 			statement.setDate(4, new java.sql.Date(fecha.getTime()));
 			statement.executeUpdate();
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
-
 	}
 	
 	public static List<DTOGasto> getGastos(Connection con) throws IOException, SQLException{
@@ -45,14 +56,16 @@ public class DAOGasto {
 				DTOGasto dtoGasto = new DTOGasto();
 				dtoGasto.setTipo(resultSet.getString("tipo"));
 				dtoGasto.setFecha(resultSet.getDate("fecha"));
-				dtoGasto.setCosto(resultSet.getString("costo"));
+				dtoGasto.setCosto(resultSet.getDouble("costo"));				
 				dtoGasto.setDescripcion(resultSet.getString("descripcion"));
-				System.out.println(dtoGasto.toString()); 
+				//System.out.println(dtoGasto.toString()); 
 				gastos.add(dtoGasto);
 			}
 			
+		} catch(SQLException e){
+			e.printStackTrace();
 		} finally{
-			
+			// Close connection?
 		}
 		
 		return gastos;

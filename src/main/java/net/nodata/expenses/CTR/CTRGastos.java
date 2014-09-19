@@ -1,4 +1,4 @@
-package net.nodata.expenses.controller;
+package net.nodata.expenses.CTR;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.nodata.expenses.DAO.DAOGasto;
 import net.nodata.expenses.DTO.DTOGasto;
 
+/**
+ * @author Victor José Arana Rodríguez
+ * @since 19/09/2014
+ *
+ */
 public class CTRGastos extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
@@ -25,30 +30,32 @@ public class CTRGastos extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		// 1. Get parameters from the request
-		String tipo = request.getParameter("tipo");
+		String tipo = null;
 		Date fecha = null;
+		Double costo = null;
+		String descripcion = null;
+		
+		tipo = request.getParameter("tipo");
+		descripcion = request.getParameter("descripcion");
+		
 		try {
 			fecha = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("fecha"));
+			costo = Double.parseDouble(request.getParameter("costo"));
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} catch(NumberFormatException e2){
+			e2.printStackTrace();
 		}
-		String costo = request.getParameter("costo");
-		String descripcion = request.getParameter("descripcion");
 		
 		// 2. Get a connection to Database
 		ServletContext sc = getServletContext();
 		Connection con = (Connection) sc.getAttribute("DBConnection"); 
 		
-		// Use a DTO to register the collected info and save it to the db
+		// 3. Use a DTO to register the collected info and save it to the db
 		DTOGasto gasto = new DTOGasto(tipo, fecha, costo, descripcion);
 		DAOGasto.add(gasto, con);
-
-
-			// TODO Auto-generated catch block
-
 		
-		// Retrieve all the information from the database
+		// 4. Retrieve all the information from the database
 		List<DTOGasto> result = null;
 		try {
 			result = DAOGasto.getGastos(con);			
@@ -57,12 +64,11 @@ public class CTRGastos extends HttpServlet{
 			e.printStackTrace();
 		}
 				
-		// Store the result object in the request object
+		// 5. Store the result object in the request object
 		request.setAttribute("result", result);		
 		request.setAttribute("gasto", gasto);
 		
-		
-		// forward request and response objects to JSP page
+		// 6. Forward request and response objects to JSP page
 		String url = "/displayExpenses.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 		dispatcher.forward(request, response);
