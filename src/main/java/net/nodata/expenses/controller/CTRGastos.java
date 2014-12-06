@@ -1,4 +1,4 @@
-package net.nodata.expenses.CTR;
+package net.nodata.expenses.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
