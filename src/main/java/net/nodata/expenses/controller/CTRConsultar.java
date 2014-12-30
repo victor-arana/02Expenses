@@ -19,28 +19,22 @@ import net.nodata.expenses.DAO.DAOGasto;
 import net.nodata.expenses.DTO.DTOGasto;
 
 /**
- * @author Victor José Arana Rodríguez
- * @since 19/09/2014
- *
+ * Servlet implementation class CTRConsultar
  */
-public class CTRGastos extends HttpServlet{
-	
+public class CTRConsultar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 0. Variables to be collected
 		String tipo = null;
-		Date fecha = null;
-		Double costo = null;
-		String descripcion = null;
+		Date fechaInicio = null;
+		Date fechaFin = null;
 		
 		// 1. Get parameters from the request
 		tipo = request.getParameter("tipo");
-		descripcion = request.getParameter("descripcion");
 		try {
-			fecha = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("fecha"));
-			costo = Double.parseDouble(request.getParameter("costo"));
+			fechaInicio = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("fechaInicio"));
+			fechaFin =  new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("fechaFin"));
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		} catch(NumberFormatException e2){
@@ -49,28 +43,24 @@ public class CTRGastos extends HttpServlet{
 		
 		// 2. Get a connection to Database
 		ServletContext sc = getServletContext();
-		Connection con = (Connection) sc.getAttribute("DBConnection"); 
+		Connection con = (Connection) sc.getAttribute("DBConnection");
 		
-		// 3. Use a DTO to register the collected info and save it to the db
-		DTOGasto gasto = new DTOGasto(tipo, fecha, costo, descripcion);
-		DAOGasto.add(gasto, con);
-		
-		// 4. Retrieve all the information from the database
+		// 3. Retrieve the the information from the database
 		List<DTOGasto> result = null;
 		try {
-			result = DAOGasto.getGastos(con);			
+			result = DAOGasto.getGastos(con,fechaInicio, fechaFin, tipo);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-				
+		
 		// 5. Store the result object in the request object
 		request.setAttribute("result", result);		
-		request.setAttribute("gasto", gasto);
 		
 		// 6. Forward request and response objects to JSP page
 		String url = "/displayExpenses.jsp";
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
-	}
+					
+		}
+
 }

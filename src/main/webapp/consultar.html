@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Consulta</title>
+</head>
+<body>
+	<form method = "POST" action="Consultar.do">
+		<table>
+			<tr>
+				<td>
+					Fecha inicio:
+				</td>
+				<td>
+					<input type = "text" name = "fechaInicio">	
+				</td>
+			</tr>			
+			<tr>
+				<td>
+					Fecha fin:
+				</td>
+				<td>
+					<input type = "text" name = "fechaFin">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Tipo:
+				</td>
+				<td>
+					<select name="tipo" size="1">
+						<option value="Gasto">Gasto</option>
+						<option value="Transporte">Transporte</option>
+						<option value="Alimentos">Alimentos</option>
+						<option value="Servicios">Servicios</option>
+						<option value="Deudas">Deudas</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+					<input type="SUBMIT" value="Consultar">
+				</td>
+			</tr>
+		</table>
+	</form> 
+</body>
+</html>

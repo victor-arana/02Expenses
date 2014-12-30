@@ -13,6 +13,27 @@
 		<url-pattern>/Gastos.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>Consulta</servlet-name>
+		<servlet-class>net.nodata.expenses.controller.CTRConsultar</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>CTRConsultar</display-name>
+		<servlet-name>CTRConsultar</servlet-name>
+		<servlet-class>net.nodata.expenses.controller.CTRConsultar</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Consulta</servlet-name>
+		<url-pattern>/Consultar.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CTRConsultar</servlet-name>
+		<url-pattern>/CTRConsultar</url-pattern>
+	</servlet-mapping>
+	
 	<context-param>
 		<param-name>DBUSER</param-name>
 		<param-value>system</param-value>

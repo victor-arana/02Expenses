@@ -71,5 +71,37 @@ public class DAOGasto {
 		return gastos;
 
 	}
+	
+	public static List<DTOGasto> getGastos(Connection con, Date fechaInicio, Date fechaFin, String tipo) throws IOException, SQLException{
+		
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		List<DTOGasto> gastos = new ArrayList<DTOGasto>();
+		
+		try{
+			String queryString = "SELECT * FROM gastos WHERE tipo = ? AND fecha >= ? AND fecha <= ? ORDER BY fecha DESC";
+			statement = con.prepareStatement(queryString);
+			statement.setString(1, tipo);
+			statement.setDate(2, new java.sql.Date(fechaInicio.getTime()));
+			statement.setDate(3, new java.sql.Date(fechaFin.getTime()));
+			resultSet = statement.executeQuery();
+			
+			while(resultSet.next()){
+				DTOGasto dtoGasto = new DTOGasto();
+				dtoGasto.setTipo(resultSet.getString("tipo"));
+				dtoGasto.setFecha(resultSet.getDate("fecha"));
+				dtoGasto.setCosto(resultSet.getDouble("costo"));				
+				dtoGasto.setDescripcion(resultSet.getString("descripcion"));
+				System.out.println(dtoGasto.toString()); 
+				gastos.add(dtoGasto);
+			}
+			
+		} catch(SQLException e){
+			
+		} finally{
+			
+		}
+		return gastos;
+	}
 
 }
